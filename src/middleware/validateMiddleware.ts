@@ -1,11 +1,11 @@
 import { CustomError } from './CustomError';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { Request, Response, NextFunction } from 'express';
 
 export function validateMiddleware(type: any): (req: Request, res: Response, next: NextFunction) => void {
     return async (req, res, next) => {
-        const validationObj = plainToClass(type, req.body);
+        const validationObj = plainToInstance(type, req.body);
         const errors = await validate(validationObj);
         if (errors.length > 0) {
             const constraints = []
